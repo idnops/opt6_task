@@ -2,7 +2,7 @@
   <div class="relative" ref="menu">
     <slot name="activator" :toggle="toggleMenu"></slot>
 
-    <div class="absolute" :style="menuPosition">
+    <div class="absolute z-50" :style="menuPosition">
       <slot name="default" v-if="isOpen"></slot>
     </div>
   </div>
