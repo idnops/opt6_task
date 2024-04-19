@@ -1,5 +1,5 @@
 <template>
-  <div class="relative" ref="menu">
+  <div class="relative w-max" ref="menu">
     <slot name="activator" :toggle="toggleMenu"></slot>
 
     <div class="absolute z-50" :style="menuPosition">
