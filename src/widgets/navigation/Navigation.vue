@@ -1,6 +1,6 @@
 import { title } from 'process';
 <template>
-  <div class="flex">
+  <div class="flex justify-between">
     <BaseTabGroup v-model="tabs">
       <BaseTabItem title="Общее"></BaseTabItem>
       <BaseTabItem title="Товары">
@@ -12,21 +12,12 @@ import { title } from 'process';
       </BaseTabItem>
       <BaseTabItem title="Доп.Расходы"> </BaseTabItem>
     </BaseTabGroup>
+    <TableSettingsMenu />
   </div>
-  <BaseMenu :offset="5" position="bottom" snap="right">
-    <template #activator="{ toggle }">
-      <button class="rounded-full size-5 bg-red-400" @click="toggle"></button>
-    </template>
-    <template #default>
-      <div class="bg-neutral-200 p-4">
-        <span>123</span>
-      </div>
-    </template>
-  </BaseMenu>
 </template>
 
 <script setup lang="ts">
-import { BaseMenu } from "@/shared/ui";
+import { TableSettingsMenu } from "@/features";
 import { BaseTabGroup, BaseTabItem } from "@/shared/ui/base-tab-group";
 import { ref } from "vue";
 

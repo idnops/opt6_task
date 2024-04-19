@@ -4,7 +4,7 @@
       <Sidebar />
     </div>
 
-    <div class="flex flex-col p-[25px]">
+    <div class="flex flex-col p-[25px] mr-[15px] w-full">
       <div class="mb-[25px]">
         <Header title="Проведение ТО и мелкий ремонт" />
       </div>

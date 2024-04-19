@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[25px]">
+  <div class="flex flex-col w-full">
     <div class="flex gap-5">
       <button
         v-for="tab in tabs"

@@ -1,8 +1,8 @@
 <template>
-  <div class="relative w-max" ref="menu">
+  <div class="relative w-max h-max" ref="menu">
     <slot name="activator" :toggle="toggleMenu"></slot>
 
-    <div class="absolute z-50" :style="menuPosition">
+    <div class="absolute z-50 w-max" :style="menuPosition">
       <slot name="default" v-if="isOpen"></slot>
     </div>
   </div>
@@ -43,7 +43,7 @@ onUnmounted(() => {
 const menuPosition = computed(() => {
   return {
     [position === "bottom" ? "top" : "bottom"]: `calc(100% + ${offset}px)`,
-    [snap]: `calc(100% - ${menuOffsetWidth.value}px`,
+    [snap]: 0,
   };
 });
 </script>
