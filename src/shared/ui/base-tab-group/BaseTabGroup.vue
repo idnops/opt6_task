@@ -37,7 +37,7 @@ defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const toggleTab = (val: any) => {
-  emit("update:modelValue", val);
+  emit("update:modelValue", 5);
   activeTab.title = val;
 };
 </script>
