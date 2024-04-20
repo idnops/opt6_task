@@ -71,7 +71,7 @@ import { ref } from "vue";
 import { BaseCheckbox, BaseMenu } from "@/shared/ui";
 
 const settings = ref(true);
-const selected = ref([]);
+const selected = ref(["name"]);
 const options = ref([
   { label: "name", value: "name" },
   { label: "price", value: "price" },

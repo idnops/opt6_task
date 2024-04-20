@@ -1,15 +1,18 @@
 <template>
   <div class="flex flex-col w-full">
-    <div class="flex gap-5">
-      <button
-        v-for="tab in tabs"
-        :key="tab"
-        class="font-semibold"
-        @click="toggleTab(tab)"
-        :class="[tab === activeTab.title ? 'text-black' : 'text-[#1253a2]']"
-      >
-        {{ tab }}
-      </button>
+    <div class="flex justify-between mr-[15px]">
+      <div class="flex gap-5">
+        <button
+          v-for="tab in tabs"
+          :key="tab"
+          class="font-semibold"
+          @click="toggleTab(tab)"
+          :class="[tab === activeTab.title ? 'text-black' : 'text-[#1253a2]']"
+        >
+          {{ tab }}
+        </button>
+      </div>
+      <slot name="actions" />
     </div>
     <div>
       <slot />
@@ -25,16 +28,16 @@ const tabs = computed(() => {
   return slots.default!().map((slot) => slot.props?.title);
 });
 
+const props = defineProps(["modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
+
 const activeTab = reactive<{
   title: string | null;
 }>({
-  title: null,
+  title: props.modelValue,
 });
 
 provide("activeTab", activeTab);
-
-defineProps(["modelValue"]);
-const emit = defineEmits(["update:modelValue"]);
 
 const toggleTab = (val: any) => {
   emit("update:modelValue", 5);

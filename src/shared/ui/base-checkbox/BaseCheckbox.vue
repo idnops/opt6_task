@@ -5,7 +5,7 @@
   >
     <div
       class="size-4 rounded flex items-center justify-center ring-1 ring-neutral-200"
-      :class="[checked ? 'bg-[#1253a2]' : 'bg-white']"
+      :class="[isChecked ? 'bg-[#1253a2]' : 'bg-white']"
     >
       <img src="@/shared/assets/check.svg" class="size-[10px]" />
     </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 const props = defineProps<{
   modelValue: any[];
   label: string;
@@ -24,12 +24,14 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
-const checked = ref(false);
 
+const isChecked = ref(false);
+onMounted(() => {
+  isChecked.value = props.modelValue.includes(props.value);
+});
 const update = () => {
-  checked.value = !checked.value;
-
-  const updated = checked.value
+  isChecked.value = !isChecked.value;
+  const updated = isChecked.value
     ? [...props.modelValue, props.value]
     : props.modelValue.filter((val) => val !== props.value);
 
