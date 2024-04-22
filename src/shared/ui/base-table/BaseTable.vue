@@ -3,7 +3,7 @@
     <div class="p-[9px] pr-[15px] flex justify-end">
       <slot name="actions" />
     </div>
-    <table class="w-full">
+    <table class="w-full" ref="tableRef">
       <thead class="border-y border-[#eeeff1] text-left">
         <tr>
           <th
@@ -15,9 +15,15 @@
           <th
             v-for="th in headers"
             :key="th"
-            class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px]"
+            class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px] select-none relative"
+            @mouseup="handleResizeEnd"
           >
             {{ th }}
+            <div
+              class="absolute w-px right-0 top-0 cursor-col-resize hover:bg-[#bcbcbc]"
+              :class="`h-[${tableHeight}px]`"
+              @mousedown="handleResizeStart"
+            ></div>
           </th>
         </tr>
       </thead>
@@ -48,10 +54,43 @@
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
+
 defineProps<{
   data: string[];
   headers: string[];
 }>();
+
+const tableRef = ref<HTMLElement | null>(null);
+const currentCol = ref<HTMLElement | null>(null);
+const currentColWidth = ref(0);
+
+const tableHeight = computed(() => {
+  return tableRef.value?.offsetHeight;
+});
+
+const pageX = ref(0);
+
+const handleResizeStart = (e: Event) => {
+  (e.target as HTMLElement).classList.add("bg-[#bcbcbc]");
+  currentCol.value = (e.target as HTMLElement).parentElement;
+  currentCol.value?.classList.add("cursor-col-resize");
+  currentColWidth.value = currentCol.value!.offsetWidth;
+  pageX.value = (e as MouseEvent).pageX;
+};
+const handleResizeEnd = (e: Event) => {
+  (e.target as HTMLElement).classList.remove("bg-[#bcbcbc]");
+  currentCol.value = null;
+};
+
+onMounted(() => {
+  document.addEventListener("mousemove", (e: MouseEvent) => {
+    if (currentCol.value) {
+      currentCol.value.style.width =
+        currentColWidth.value + e.pageX - pageX.value + "px";
+    }
+  });
+});
 </script>
 
 <style scoped></style>
