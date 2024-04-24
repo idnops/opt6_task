@@ -7,22 +7,22 @@
       <thead class="border-y border-[#eeeff1] text-left">
         <tr>
           <th
-            class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px]"
+            class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px] w-20"
           ></th>
           <th
-            class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px]"
+            class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px] w-20"
           ></th>
           <th
             v-for="th in headers"
             :key="th"
             class="first:border-none last:border-none border-x border-collapse border-[#eeeff1] py-[14px] px-[10px] select-none relative"
-            @mouseup="handleResizeEnd"
+            @mouseup="end"
           >
             {{ th }}
             <div
-              class="absolute w-px right-0 top-0 cursor-col-resize hover:bg-[#bcbcbc]"
-              :class="`h-[${tableHeight}px]`"
-              @mousedown="handleResizeStart"
+              class="absolute w-1 right-0 top-0 cursor-col-resize border-r border-transparent hover:border-[#bcbcbc]"
+              :style="{ height: tableHeight + 'px' }"
+              @mousedown="start"
             ></div>
           </th>
         </tr>
@@ -54,42 +54,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { onMounted, onUpdated, ref } from "vue";
+import { useTableResize } from "@/shared/lib";
 
 defineProps<{
   data: string[];
   headers: string[];
 }>();
 
-const tableRef = ref<HTMLElement | null>(null);
-const currentCol = ref<HTMLElement | null>(null);
-const currentColWidth = ref(0);
+const tableRef = ref<HTMLTableElement | null>(null);
+const tableHeight = ref<number | undefined>(0);
+const { start, end } = useTableResize(tableRef);
 
-const tableHeight = computed(() => {
-  return tableRef.value?.offsetHeight;
+onUpdated(() => {
+  tableHeight.value = tableRef.value?.offsetHeight;
 });
 
-const pageX = ref(0);
-
-const handleResizeStart = (e: Event) => {
-  (e.target as HTMLElement).classList.add("bg-[#bcbcbc]");
-  currentCol.value = (e.target as HTMLElement).parentElement;
-  currentCol.value?.classList.add("cursor-col-resize");
-  currentColWidth.value = currentCol.value!.offsetWidth;
-  pageX.value = (e as MouseEvent).pageX;
-};
-const handleResizeEnd = (e: Event) => {
-  (e.target as HTMLElement).classList.remove("bg-[#bcbcbc]");
-  currentCol.value = null;
-};
-
 onMounted(() => {
-  document.addEventListener("mousemove", (e: MouseEvent) => {
-    if (currentCol.value) {
-      currentCol.value.style.width =
-        currentColWidth.value + e.pageX - pageX.value + "px";
-    }
-  });
+  tableHeight.value = tableRef.value?.offsetHeight;
 });
 </script>
 

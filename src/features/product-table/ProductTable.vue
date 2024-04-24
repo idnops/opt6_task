@@ -1,4 +1,5 @@
 <template>
+  <TableAddRow @clicked="handleAddRow" />
   <BaseTable :headers="headers" :data="data">
     <template #actions>
       <TableSettingsMenu />
@@ -8,7 +9,7 @@
 
 <script setup lang="ts">
 import { BaseTable } from "@/shared/ui";
-import { TableSettingsMenu } from "@/features";
+import { TableSettingsMenu, TableAddRow } from "@/features";
 import { ref } from "vue";
 
 const headers = ref([
@@ -42,6 +43,16 @@ const data = ref([
     total: "12",
   },
 ]);
+
+const handleAddRow = () => {
+  data.value.push({
+    unit: "product name 3",
+    price: "10",
+    amount: "17",
+    name: "product name",
+    total: "12",
+  });
+};
 </script>
 
 <style scoped></style>

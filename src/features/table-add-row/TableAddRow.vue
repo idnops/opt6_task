@@ -4,6 +4,7 @@
   >
     <button
       class="bg-[#2f8cff] rounded-[5px] p-[10px] pr-[15px] text-white flex items-center text-sm"
+      @click="$emit('clicked')"
     >
       <img src="@/shared/assets/plus.svg" class="size-[11px] mr-[7px]" />
       <span>Добавить строку</span>
@@ -11,6 +12,8 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineEmits(["clicked"]);
+</script>
 
 <style scoped></style>

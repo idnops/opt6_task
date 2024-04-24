@@ -7,7 +7,6 @@ import { title } from 'process';
       </template>
       <BaseTabItem title="Общее"></BaseTabItem>
       <BaseTabItem title="Товары">
-        <TableAddRow />
         <ProductTable />
       </BaseTabItem>
       <BaseTabItem title="Доп.Расходы"> </BaseTabItem>
@@ -18,7 +17,7 @@ import { title } from 'process';
 <script setup lang="ts">
 import { TableSettingsMenu } from "@/features";
 import { BaseTabGroup, BaseTabItem } from "@/shared/ui/base-tab-group";
-import { TableAddRow, ProductTable } from "@/features";
+import { ProductTable } from "@/features";
 import { ref } from "vue";
 
 const tabs = ref("Товары");
